@@ -1,5 +1,4 @@
 FROM ubuntu:16.04
-MAINTAINER Werner Beroux <werner@beroux.com>
 
 # Install required packages.
 RUN set -x \
@@ -16,13 +15,15 @@ RUN set -x \
         php7.0-ldap \
         php7.0-mbstring \
         php7.0-xml \
-        php7.0-zip \
-    # Install docker-compose.
- && LATEST_DOCKER_COMPOSE_URI=$(curl -L https://github.com/docker/compose/releases/latest | grep -o '[^\"]*/docker-compose-Linux-x86_64') \
+        php7.0-zip
+
+# Install docker-compose.
+RUN LATEST_DOCKER_COMPOSE_URI=$(curl -L https://github.com/docker/compose/releases/latest | grep -o '[^\"]*/docker-compose-Linux-x86_64') \
  && curl -L "https://github.com/$LATEST_DOCKER_COMPOSE_URI" > /usr/local/bin/docker-compose \
- && chmod +x /usr/local/bin/docker-compose \
-    # Install S6.
- && apt install -y build-essential \
+ && chmod +x /usr/local/bin/docker-compose
+
+# Install S6.
+RUN apt install -y build-essential \
 
  && git clone git://git.skarnet.org/skalibs /tmp/skalibs \
  && cd /tmp/skalibs \
