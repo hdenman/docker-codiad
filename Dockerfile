@@ -18,13 +18,13 @@ RUN set -x \
         php7.0-zip
 
 # Install docker-compose.
-RUN LATEST_DOCKER_COMPOSE_URI=$(curl -L https://github.com/docker/compose/releases/latest | grep -o '[^\"]*/docker-compose-Linux-x86_64') \
- && curl -L "https://github.com/$LATEST_DOCKER_COMPOSE_URI" > /usr/local/bin/docker-compose \
+RUN curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
  && chmod +x /usr/local/bin/docker-compose
 
 # Install S6.
-RUN apt install -y build-essential \
-
+RUN apt install -y build-essential 
+RUN ln -f /dev/urandom /dev/random
+RUN ln -f /dev/urandom /dev/random \
  && git clone git://git.skarnet.org/skalibs /tmp/skalibs \
  && cd /tmp/skalibs \
  && git checkout v2.3.10.0 \
